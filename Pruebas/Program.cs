@@ -11,6 +11,11 @@ namespace Pruebas
     {
         static void Main(string[] args)
         {
+            serpiete();
+        }
+
+        private static void serpiete()
+        {
             int row = 0;
             int[,] matrix1;
 
@@ -30,8 +35,8 @@ namespace Pruebas
             mostrarMatriz(matrix1);
 
             Console.WriteLine("Mostrando punto de inicio....");
-            int aRow = matrix1.GetLength(0)/2;
-            int aCol = matrix1.GetLength(1)/2;
+            int aRow = matrix1.GetLength(0) / 2;
+            int aCol = matrix1.GetLength(1) / 2;
             matrix1[aRow, aCol] = 1;
             mostrarMatriz(matrix1);
 
@@ -40,7 +45,8 @@ namespace Pruebas
             while (flag)
             {
                 flag = checkCompletedMatrix(matrix1);
-                if (flag == true) { 
+                if (flag == true)
+                {
                     var ch = Console.ReadKey(false).Key;
                     Boolean correctMove = true;
                     switch (ch)
@@ -68,7 +74,7 @@ namespace Pruebas
                             break;
                         case ConsoleKey.LeftArrow:
                             aCol--;
-                            correctMove = Move(aRow, aCol,matrix1);
+                            correctMove = Move(aRow, aCol, matrix1);
                             if (correctMove == false)
                                 aCol++;
                             break;
@@ -78,7 +84,6 @@ namespace Pruebas
 
             if (flag == false)
                 Console.WriteLine("No queda mas Matrix, has ganado");
-
         }
 
         private static bool Move(int aRow, int aCol, int[,] matrix1)
