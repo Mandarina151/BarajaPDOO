@@ -13,6 +13,20 @@ namespace Pruebas
         private int palo;
         string[] palos = { "Oros", "Copas", "Espadas", "Bastos" };
 
+        //Getter y setter de numero
+        public int Numero
+        {
+            get
+            {
+                return numero;
+            }
+            set
+            {
+                if (value != null)
+                    numero = value;
+            }
+        }
+
         //Constructor
         public Carta()
         {
@@ -25,6 +39,9 @@ namespace Pruebas
             numero = n;
             palo = p;
         }
+    
+
+
 
         //Funciones 
         public void escribeCarta()

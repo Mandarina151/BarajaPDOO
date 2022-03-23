@@ -26,6 +26,14 @@ namespace Pruebas
             baraja.escribeBaraja();
             baraja.numeroCartas();
 
+            baraja.Barajar();
+            baraja.escribeBaraja();
+
+            baraja.cogerCarta(4, false);
+            baraja.cogerCartaAlAzar();
+            baraja.numeroCartas();
+
+
 
         }
 

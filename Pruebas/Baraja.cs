@@ -8,7 +8,9 @@ namespace Pruebas
 {
     class Baraja
     {
-        //Miembros
+        //Atributos de la clase
+        int numPalos = 4;
+        int numCartasXpalo = 12;
         //Lista de cartas
         List<Carta> baraja = new List<Carta>();
         //Carta
@@ -17,22 +19,45 @@ namespace Pruebas
         public Baraja()
         {
             int i, j;
-            for (i = 0; i < 4; i++)
+            for (i = 0; i < numPalos; i++)
             {
-                for (j = 0; j < 12; j++)
+                for (j = 0; j < numCartasXpalo; j++)
                 {
                     carta = new Carta(j + 1, i);
                     baraja.Add(carta);
                 }
-
             }
         }
-
 
         //Metodos
         public void numeroCartas()
         {
             Console.WriteLine("En la baraja hay "+baraja.Count+" cartas");
+        }
+
+        public void robarCarta()
+        {
+            baraja[0].escribeCarta();
+            baraja.RemoveAt(0);
+        }
+
+        public void cogerCarta(int n,bool rand)
+        {
+            if(rand)
+                Console.WriteLine("Has cogido una carta random");
+            else
+                Console.WriteLine("Has codigo la carta de la posicion: "+n);
+
+            baraja[n].escribeCarta();
+            baraja.Remove(baraja[n]);
+        }
+
+        public void cogerCartaAlAzar()
+        {
+            Random r = new Random();
+            int n = r.Next(0, baraja.Count);
+
+            cogerCarta(n,true);
         }
 
         public void escribeBaraja()
@@ -44,11 +69,21 @@ namespace Pruebas
             }
         }
 
-        public void robarCarta()
+        public void Barajar()
         {
-            baraja[0].escribeCarta();
-            baraja.RemoveAt(0);
+            Random r = new Random();
+            int posicion;
+            int totalCartas = baraja.Count;
+            for (int i = 0; i < totalCartas; i++)
+            {
+                posicion = r.Next(0, totalCartas);
+                baraja.Insert(posicion, baraja[0]);
+                baraja.Remove(baraja[0]);
+            }
+
         }
+
+
 
 
     }
