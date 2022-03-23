@@ -41,6 +41,22 @@ namespace Pruebas
             baraja.RemoveAt(0);
         }
 
+        public List<Carta> asignarManoJugador(int nJugadores)
+        {
+            int totalCartas = numCartasXpalo * numPalos;
+            int totalRepartir = totalCartas / nJugadores;
+            List<Carta> Mano = new List<Carta>();
+
+
+            for (int i = 0; i < totalRepartir; i++)
+            {
+                Mano.Add(baraja[0]);
+ 
+                baraja.RemoveAt(0);
+            }
+            return Mano;
+        }
+
         public void cogerCarta(int n,bool rand)
         {
             if(rand)
@@ -80,7 +96,6 @@ namespace Pruebas
                 baraja.Insert(posicion, baraja[0]);
                 baraja.Remove(baraja[0]);
             }
-
         }
 
 
