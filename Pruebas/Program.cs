@@ -14,6 +14,9 @@ namespace Pruebas
             //Inicializo
             Baraja baraja = new Baraja();
             List<Jugador> jugadores = new List<Jugador>();
+            List<Carta> CartasAComparar = new List<Carta>();
+            Carta cartaMasAlta;
+
 
             //Funciones
             baraja.Barajar();
@@ -26,30 +29,84 @@ namespace Pruebas
 
             MostrarIdJugadores(jugadores);
 
-            MostrarCartaYcomparar(jugadores);
-            
+            while (jugadores[0].Mano.Count != 0)
+            {
+                CartasAComparar = MostrarCarta(jugadores);
+
+                /*
+                cartaMasAlta = compararCartas(CartasAComparar);
+                mostrarGanadorRonda(jugadores, cartaMasAlta, CartasAComparar);*/
+            }
+
+            MostrarGanador(jugadores);
+
+
+
+
 
 
 
 
         }
 
-        private static void MostrarCartaYcomparar(List<Jugador> jugadores)
+        private static void MostrarGanador(List<Jugador> jugadores)
         {
-            int nJugadores = jugadores.Count;
-            List<Carta> CartaComparar = new List<Carta>();
-
-            //Inicializo un objeto carta para asignar el valor de la carta optenida de cada jugador
-            for (int i = 0; i < nJugadores; i++)
+            int ganador = jugadores[0].Descartes.Count;
+            for (int i = 0; i < jugadores.Count; i++)
             {
-                
-                CartaComparar.Add(jugadores[i].Mano[0]);
-
-
-                jugadores[i].Mano.RemoveAt(0);
+                if (jugadores[i].Descartes.Count > ganador)
+                    ganador = jugadores[i].Descartes.Count;
             }
 
+            for (int i = 0; i < jugadores.Count; i++)
+            {
+                if (jugadores[i].Descartes.Count == ganador)
+                    Console.WriteLine("El jugador " + jugadores[i].IdJugador + " ha ganado la partida. Felicidades");
+            }
+        }
 
+        private static void mostrarGanadorRonda(List<Jugador> jugadores, Carta cartaMasAlta, List<Carta> cartasAComparar)
+        {
+            for (int i = 0; i < jugadores.Count; i++)
+            {
+                if (jugadores[i].Descartes.Contains(cartaMasAlta))
+                {
+                    cartasAComparar.Remove(cartaMasAlta);
+                    jugadores[i].añadirDescartes(cartasAComparar);
+                    Console.WriteLine("El jugador " + jugadores[i].IdJugador + " ha ganado la ronda.");
+                }
+            }
+        }
+
+        private static Carta compararCartas(List<Carta> cartasAComparar)
+        {
+            Carta ganadora = cartasAComparar[0];
+            for (int i = 0; i < cartasAComparar.Count; i++)
+            {
+                if (cartasAComparar[i].Numero > ganadora.Numero)
+                    ganadora = cartasAComparar[i];
+            }
+            return ganadora;
+        }
+
+        private static List<Carta> MostrarCarta(List<Jugador> jugadores)
+        {
+            List<Carta> CartaComparar = new List<Carta>();
+            Carta descarte;
+            //Inicializo un objeto carta para asignar el valor de la carta optenida de cada jugador
+            for (int i = 0; i < jugadores.Count; i++)
+            {
+                CartaComparar.Add(jugadores[i].Mano[0]);
+                descarte = jugadores[i].Mano[0];
+
+                Console.WriteLine("HOLAAAAAAA");
+                descarte.escribeCarta();
+
+                Console.WriteLine(jugadores[i].Descartes);
+                jugadores[i].Descartes.Add(descarte);
+                //jugadores[i].Mano.RemoveAt(0);
+            }
+            return CartaComparar;
         }
 
         private static List<Jugador> asignarCartas(Baraja baraja, List<Jugador> jugadores)
@@ -57,6 +114,7 @@ namespace Pruebas
             for (int i = 0; i < jugadores.Count; i++)
             {
                 jugadores[i].Mano = baraja.asignarManoJugador(jugadores.Count);
+                jugadores[i].Descartes = null;
             }
             return jugadores;
         }
@@ -91,12 +149,12 @@ namespace Pruebas
                 else
                     Console.WriteLine("Valor no valido.");
             }
-            
+
             if (flag == false)
             {
                 for (int i = 0; i < nJugadores; i++)
                 {
-                    jugador = new Jugador(i + 1, null);
+                    jugador = new Jugador(i + 1, null, null);
                     jugadores.Add(jugador);
                 }
             }
